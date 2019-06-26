@@ -1,6 +1,7 @@
 import grafo
 from bibliotecaFuncionesGrafos import *
 
+
 class RedDeDelincuentes:
 
     def __init__(self, grafo):
@@ -38,12 +39,12 @@ class RedDeDelincuentes:
     def mas_imp(self, cant):
         mas_importantes = centralidad_aprox(self.grafoDelincuentes, cant)
         for i in range(cant - 1):
-            if i < len(self.grafoDelincuentes) - 1:
+            if i < len(grafo) - 1:
                 print(mas_importantes[i], end=", ")
         print(mas_importantes[-1])
 
     def persecucion(self, agentesEncubiertos, kMasImp):
-        caminoMin = persecucion_rapida(self.grafoDelincuentes, agentesEncubiertos, kMasImp)
+        caminoMin = recorrido_min_multi_origen_multi_destino(self.grafoDelincuentes, agentesEncubiertos, kMasImp)
         if (len(caminoMin) == 0):
             return print("La persecución no es posible")
         for i in range(0, len(caminoMin) - 1):

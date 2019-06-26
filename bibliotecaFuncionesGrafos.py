@@ -104,29 +104,28 @@ def random_walks(grafo, longitudCamino, cantidadCaminos):
     return caminos
 
 
-def persecucion_rapida(grafo, agentesEncubiertos, kMasImp):
-    kDelincuentes = centralidad_aprox(grafo, kMasImp)
-    agentesEncubiertosVertice = []
-    for agenteEncubierto in agentesEncubiertos:
-        vertice = grafo.obtenerVertice(agenteEncubierto)
+def recorrido_min_multi_origen_multi_destino(grafo, idVerticesOrigen, kMasImp):
+    kVerticesMasImp = centralidad_aprox(grafo, kMasImp)
+    verticesOrigen = []
+    for idVerticeOrigen in idVerticesOrigen:
+        vertice = grafo.obtenerVertice(idVerticeOrigen)
         if (vertice != None):
-            agentesEncubiertosVertice.append(vertice)
+            verticesOrigen.append(vertice)
     caminoMin = []
-    if len(agentesEncubiertosVertice) == 0: return caminoMin
+    if len(verticesOrigen) == 0: return caminoMin
     ordenMin = math.inf
-    for agenteVertice in agentesEncubiertosVertice:
-        for delincuente in kDelincuentes:
-            orden, camino = recorridoMinimoBfs(grafo, agenteVertice, delincuente)
+    for verticeOrigen in verticesOrigen:
+        for kVerticeMasImp in kVerticesMasImp:
+            orden, camino = recorridoMinimoBfs(grafo, verticeOrigen, kVerticeMasImp)
             if orden < ordenMin:
                 ordenMin = orden
                 caminoMin = camino
 
     return caminoMin
 
-def cargarGrafo():#fichero):
+def cargarGrafo(ficheroRuta):
     grafo = Grafo()
-    #with open('minimo_propio.tsv','r') as fichero:
-    with open('comunidades.tsv','r') as fichero:
+    with open(ficheroRuta,'r') as fichero:
         for linea in fichero:
             origen, destino = linea.strip('\n').split('\t')
             grafo.agregarArista(str(origen),str(destino))

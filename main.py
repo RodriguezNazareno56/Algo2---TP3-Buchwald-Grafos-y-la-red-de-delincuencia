@@ -39,6 +39,6 @@ def menuPrincipal(redDelincuencia):
 
 
 
-grafo = cargarGrafo()
+grafo = cargarGrafo('comunidades.tsv')
 redDeDelincuentes = RedDeDelincuentes(grafo)
 menu = menuPrincipal(redDeDelincuentes)
