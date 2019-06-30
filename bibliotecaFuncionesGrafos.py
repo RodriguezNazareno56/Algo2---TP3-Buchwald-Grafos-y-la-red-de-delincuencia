@@ -1,4 +1,4 @@
-from collections import Counter
+import collections
 from io import open
 import random
 import math
@@ -71,7 +71,7 @@ def max_freq(label, adyacentes):
     labelAdyacentes = []
     for adyacente in adyacentes:
         labelAdyacentes.append(label[adyacente])
-    return (Counter(labelAdyacentes).most_common()[0][0])
+    return (collections.Counter(labelAdyacentes).most_common()[0][0])
 
 # Centralidad aproximada
 def centralidad_aprox(grafo, cantidad):
@@ -82,7 +82,7 @@ def centralidad_aprox(grafo, cantidad):
             recorridoTotal.append(vertice)
 
     verticesCentrales = []
-    candidatosCentrales = Counter(recorridoTotal).most_common()
+    candidatosCentrales = collections.Counter(recorridoTotal).most_common()
     for i in range(cantidad):
         if i < len(grafo) - 1:
             verticesCentrales.append(candidatosCentrales[i][0])
@@ -173,7 +173,7 @@ def _ciclo_largo_n(visitados, origen, actual, n):
             if adyacente not in visitados:
                 visitados.append(adyacente)
                 if(_ciclo_largo_n(visitados, origen, adyacente, n-1) == False):
-                    quitado = visitados.pop()
+                    visitados.pop()
                 else:
                     return True
         return False

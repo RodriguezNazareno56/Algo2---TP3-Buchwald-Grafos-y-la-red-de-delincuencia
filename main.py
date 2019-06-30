@@ -1,6 +1,6 @@
-from redDeDelincuencia import *
+import redDeDelincuencia
 from controladorMenu import *
-from bibliotecaFuncionesGrafos import*
+import bibliotecaFuncionesGrafos
 
 
 def menuPrincipal(redDelincuencia):
@@ -42,6 +42,6 @@ def menuPrincipal(redDelincuencia):
 
 
 
-grafo = cargarGrafo('minimo.tsv')
-redDeDelincuentes = RedDeDelincuentes(grafo)
+grafo = bibliotecaFuncionesGrafos.cargarGrafo('minimo.tsv')
+redDeDelincuentes = redDeDelincuencia.RedDeDelincuentes(grafo)
 menu = menuPrincipal(redDeDelincuentes)
