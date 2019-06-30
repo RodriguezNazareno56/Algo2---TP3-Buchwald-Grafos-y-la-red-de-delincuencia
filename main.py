@@ -2,6 +2,7 @@ from redDeDelincuencia import *
 from controladorMenu import *
 from bibliotecaFuncionesGrafos import*
 
+
 def menuPrincipal(redDelincuencia):
     controladorMenu = ControladorMenu()
     comando, parametros = controladorMenu.controladorMenuPrincipal()
@@ -30,15 +31,17 @@ def menuPrincipal(redDelincuencia):
             redDelincuencia.divulgarRumor(delincuente, distMax)
 
         elif (comando == 'divulgar_ciclo'):
-            print(comando)
+            delincuenteCiclo = parametros[0]
+            largoCiclo = int(parametros[1])
+            redDelincuencia.divulgar_ciclo(delincuenteCiclo, largoCiclo)
 
         elif (comando == 'cfc'):
-            print(comando)
+            redDelincuencia.cfc()
 
         comando, parametros = controladorMenu.controladorMenuPrincipal()
 
 
 
-grafo = cargarGrafo('comunidades.tsv')
+grafo = cargarGrafo('mensajes.tsv')
 redDeDelincuentes = RedDeDelincuentes(grafo)
 menu = menuPrincipal(redDeDelincuentes)

@@ -50,3 +50,23 @@ class RedDeDelincuentes:
         for i in range(0, len(caminoMin) - 1):
             print(caminoMin[i], end=" -> ")
         print(caminoMin[-1])
+
+    def cfc(self):
+        componente_fuertemente_conexas = cfc(self.grafoDelincuentes)
+        comp_contador = 1
+        for componente in componente_fuertemente_conexas:
+            if len(componente) > 1:
+                print("CFC " + str(comp_contador) + ": ", end="")
+                for i in range(len(l) - 1):
+                    print(componente[i], end=" ,")
+                print(componente[-1])
+                comp_contador += 1
+
+    def divulgar_ciclo(self, delincuente, n):
+        vDelincuente = self.grafoDelincuentes.obtenerVertice(delincuente)
+        if (vDelincuente == None): return print("El delincuente no existe")
+        ciclo = ciclo_largo_n(grafo, vDelincuente, n)
+        if (len(ciclo) < n + 1): return print("El ciclo de largo {0} no es posible".format(str(n)))
+        for i in range(len(ciclo) - 1):
+            print(ciclo[i], end=" -> ")
+        print(ciclo[-1])
