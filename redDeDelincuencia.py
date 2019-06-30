@@ -57,7 +57,7 @@ class RedDeDelincuentes:
         for componente in componente_fuertemente_conexas:
             if len(componente) > 1:
                 print("CFC " + str(comp_contador) + ": ", end="")
-                for i in range(len(l) - 1):
+                for i in range(len(componente) - 1):
                     print(componente[i], end=" ,")
                 print(componente[-1])
                 comp_contador += 1
