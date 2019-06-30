@@ -123,6 +123,68 @@ def recorrido_min_multi_origen_multi_destino(grafo, idVerticesOrigen, kMasImp):
 
     return caminoMin
 
+
+def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
+    visitados.add(v)
+    s.append(v)
+    p.append(v)
+    for w in v.obtenerAdyacentes():
+        if w not in visitados:
+            orden[w] = orden[v] + 1
+            dfs_cfc(grafo, w, visitados, orden, p, s, cfcs, en_cfs)
+        elif w not in en_cfs:
+            while len(p) != 0 and orden[p[-1]] > orden[w]:
+                p.pop()
+
+    if (len(p) != 0) and p[-1] == v:
+        p.pop()
+        z = None
+        nueva_cfc = []
+        while z != v:
+            z = s.pop()
+            en_cfs.add(z)
+            nueva_cfc.append(z)
+        cfcs.append(nueva_cfc)
+
+
+def cfc(grafo):
+    visitados = set()
+    orden = {}
+    p = []
+    s = []
+    cfcs = []
+    en_cfs = set()
+    for v in grafo:
+        if v not in visitados:
+            orden[v] = 0
+            dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs)
+    return cfcs
+
+
+def _ciclo_largo_n(visitados, origen, actual, n):
+    if n == 1:
+        if origen in actual.obtenerAdyacentes():
+            visitados.append(origen)
+            return True
+        else:
+            return False
+    else:
+        for adyacente in actual.obtenerAdyacentes():
+            if adyacente not in visitados:
+                visitados.append(adyacente)
+                if(_ciclo_largo_n(visitados, origen, adyacente, n-1) == False):
+                    quitado = visitados.pop()
+                else:
+                    return True
+        return False
+
+
+def ciclo_largo_n(grafo, origen, n):
+    visitados = [origen]
+    _ciclo_largo_n(visitados, origen, origen, n)
+    return visitados
+
+
 def cargarGrafo(ficheroRuta):
     grafo = Grafo()
     with open(ficheroRuta,'r') as fichero:
