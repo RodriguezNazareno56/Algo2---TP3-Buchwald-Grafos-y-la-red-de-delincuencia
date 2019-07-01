@@ -6,7 +6,7 @@ class ControladorMenu:
     def __mostrarMenu(self, titulo, opciones):
         print('\n{0}'.format(titulo))
         for opcion in opciones:
-            print(opcion)
+            print('-',opcion)
 
         respuesta = input("Ingrese la operación que desea realizar: ")
         if(respuesta == ''): return None, None
@@ -43,7 +43,7 @@ class ControladorMenu:
         return False
 
     def controladorMenuPrincipal(self):
-        return self.__mostrarMenu("Que operación desea realizar?",
+        return self.__mostrarMenu("¿Que operación desea realizar?",
                                   ['min_seguimientos', 'mas_imp', 'persecucion', 'comunidades', 'divulgar',
                                    'divulgar_ciclo', 'cfc'])
     
