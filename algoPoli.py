@@ -39,8 +39,10 @@ def menuPrincipal(redDelincuencia):
         elif (comando == 'cfc'):
             redDelincuencia.cfc()
 
-        comando, parametros = controladorMenu.controladorMenuPrincipal()
-
+        try:
+            comando, parametros = controladorMenu.controladorMenuPrincipal()
+        except EOFError:
+            comando = None
 
 def main(argv):
     if(len(argv) != 1):
