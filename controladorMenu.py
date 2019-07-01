@@ -9,6 +9,7 @@ class ControladorMenu:
             print(opcion)
 
         respuesta = input("Ingrese la operación que desea realizar: ")
+        if(respuesta == ''): return None, None
         operacion = respuesta.split(' ')
         comando = operacion[0]
         parametros = operacion[1:]

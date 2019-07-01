@@ -190,6 +190,7 @@ def cargarGrafo(ficheroRuta):
     with open(ficheroRuta,'r') as fichero:
         for linea in fichero:
             origen, destino = linea.strip('\n').split('\t')
-            grafo.agregarArista(str(origen),str(destino))
+            if (origen != destino):
+                grafo.agregarArista(str(origen),str(destino))
         fichero.close()
     return grafo

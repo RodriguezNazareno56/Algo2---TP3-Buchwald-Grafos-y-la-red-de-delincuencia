@@ -1,3 +1,4 @@
+import sys
 import redDeDelincuencia
 from controladorMenu import *
 import bibliotecaFuncionesGrafos
@@ -41,7 +42,17 @@ def menuPrincipal(redDelincuencia):
         comando, parametros = controladorMenu.controladorMenuPrincipal()
 
 
+def main(argv):
+    if(len(argv) != 1):
+        print("Error: Cantidad erronea de parametros")
+        return -1
+    try:
+        grafo = bibliotecaFuncionesGrafos.cargarGrafo(argv[0])
+        redDeDelincuentes = redDeDelincuencia.RedDeDelincuentes(grafo)
+        menuPrincipal(redDeDelincuentes)
+    except FileNotFoundError:
+        print("Error: archivo fuente inaccesible")
 
-grafo = bibliotecaFuncionesGrafos.cargarGrafo('minimo.tsv')
-redDeDelincuentes = redDeDelincuencia.RedDeDelincuentes(grafo)
-menu = menuPrincipal(redDeDelincuentes)
+
+
+main(sys.argv[1:])
