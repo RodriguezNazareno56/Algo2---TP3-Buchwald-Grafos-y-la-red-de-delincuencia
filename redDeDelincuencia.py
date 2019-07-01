@@ -32,7 +32,7 @@ class RedDeDelincuentes:
     def mas_imp(self, cant):
         mas_importantes = centralidad_aprox(self.grafoDelincuentes, cant)
         for i in range(cant - 1):
-            if i < len(grafo) - 1:
+            if i < len(self.grafoDelincuentes) - 1:
                 print(mas_importantes[i], end=", ")
         print(mas_importantes[-1])
 
