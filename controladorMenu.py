@@ -4,11 +4,11 @@ class ControladorMenu:
         pass
 
     def __mostrarMenu(self, titulo, opciones):
-        print('\n{0}'.format(titulo))
-        for opcion in opciones:
-            print('-',opcion)
+        #print('\n{0}'.format(titulo))
+        #for opcion in opciones:
+        #    print('-',opcion)
 
-        respuesta = input("Ingrese la operación que desea realizar: ")
+        respuesta = input()#("Ingrese la operación que desea realizar: ")
         if(respuesta == ''): return None, None
         operacion = respuesta.split(' ')
         comando = operacion[0]
@@ -16,7 +16,7 @@ class ControladorMenu:
 
         while (comando not in opciones or
                not self.__validarParametros(comando, parametros)):
-            respuesta = input("Ingrese la operación que desea realizar: ")
+            respuesta = input()#("Ingrese la operación que desea realizar: ")
             if (respuesta == ''):
                 return None, None
             operacion = respuesta.split(' ')
