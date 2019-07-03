@@ -18,7 +18,7 @@ class RedDeDelincuentes:
         vOrigen = self.grafoDelincuentes.obtenerVertice(origen)
         if (vOrigen == None): return print("El delincuente no existe")
         afectados = recorridoMinimoBfsMaximo(grafo, vOrigen, distMax)
-        self.__visualizar_resultado(afectados, ', ')
+        self.__visualizar_resultado(afectados[1:], ', ')
 
     def comunidades(self, n):
         comunidades = label_propagation(self.grafoDelincuentes, 5)  # El 5 este medio arbitrario
@@ -46,16 +46,16 @@ class RedDeDelincuentes:
         componente_fuertemente_conexas = cfc(self.grafoDelincuentes)
         comp_contador = 1
         for componente in componente_fuertemente_conexas:
-            if len(componente) > 1:
-                print("CFC " + str(comp_contador) + ": ", end="")
-                self.__visualizar_resultado(componente, ' ,')
-                comp_contador += 1
+            #if len(componente) > 1:
+            print("CFC " + str(comp_contador) + ": ", end="")
+            self.__visualizar_resultado(componente, ' ,')
+            comp_contador += 1
 
     def divulgar_ciclo(self, delincuente, n):
         vDelincuente = self.grafoDelincuentes.obtenerVertice(delincuente)
         if (vDelincuente == None): return print("El delincuente no existe")
         ciclo = ciclo_largo_n(grafo, vDelincuente, n)
-        if (len(ciclo) < n + 1): return print("El ciclo de largo {0} no es posible".format(str(n)))
+        if (len(ciclo) < n + 1): return print("No se encontro recorrido")
         self.__visualizar_resultado(ciclo, ' -> ')
 
     def __visualizar_resultado(self, lista, separador):

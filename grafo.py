@@ -5,7 +5,7 @@ class Vertice:
         self.conectadoA = {}
 
     def __str__(self):
-        return str(self.id)  # + '\tconetado a: ' + str([x.id for x in self.conectadoA])
+        return str(self.id)
 
     def agregarVecino(self, vecino, ponderacion=0):
         self.conectadoA[vecino] = ponderacion

@@ -3,6 +3,10 @@ class ControladorMenu:
     def __init__(self):
         pass
 
+    # Imprime Menu pasando titulo y opciones como parametro
+    # --> parametro string titulo - Titulo a Mostrar
+    # --> parametro lista opciones - Opciones para Mostrar
+    # --> retorna comando y parametros ingresados
     def __mostrarMenu(self, titulo, opciones):
         #print('\n{0}'.format(titulo))
         #for opcion in opciones:

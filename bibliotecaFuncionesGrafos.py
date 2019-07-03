@@ -81,7 +81,7 @@ def max_freq(label, adyacentes):
 
 # Centralidad aproximada
 def centralidad_aprox(grafo, cantidad):
-    caminos = random_walks(grafo, 30, 30)  # Numero arbitrario
+    caminos = random_walks(grafo, 1000, 300)  # Numero arbitrario
     recorridoTotal = []
     for camino in caminos:
         for vertice in camino:
@@ -139,10 +139,10 @@ def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
             orden[w] = orden[v] + 1
             dfs_cfc(grafo, w, visitados, orden, p, s, cfcs, en_cfs)
         elif w not in en_cfs:
-            while len(p) != 0 and orden[p[-1]] > orden[w]:
+            while p and orden[p[-1]] > orden[w]:
                 p.pop()
 
-    if (len(p) != 0) and p[-1] == v:
+    if p and p[-1] == v:
         p.pop()
         z = None
         nueva_cfc = []
