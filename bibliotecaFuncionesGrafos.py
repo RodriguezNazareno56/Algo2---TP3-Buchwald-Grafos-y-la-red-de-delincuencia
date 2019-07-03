@@ -3,28 +3,34 @@ from io import open
 import random
 import math
 from grafo import *
+import sys
+sys.setrecursionlimit(10000)
+from collections import deque
 
 def bfs(grafo, origen, destino=None, ordenMax=None):
-    visitados = []
+    visitados = set()
     padre = {}
     orden = {}
-    cola = [] # Esto deberia ser una cola y deberia tener mejor nombre
-    visitados.append(origen)
+    cola = deque()
+    visitados.add(origen)
     padre[origen] = None
     orden[origen] = 0
     cola.append(origen)
-    while(len(cola) != 0):
-        vertice = cola.pop(0)
-        if(destino and vertice == destino):
+    while(cola):
+        vertice = cola.popleft()
+
+        if(destino != None and vertice == destino):
             return padre,orden
         if(ordenMax and ordenMax == orden[vertice]):
             return padre,orden
+
         for adyacente in vertice.obtenerAdyacentes():
             if adyacente not in visitados:
-                visitados.append(adyacente)
+                visitados.add(adyacente)
                 padre[adyacente] = vertice
                 orden[adyacente] = orden[vertice]+1
                 cola.append(adyacente)
+
     return padre,orden
 
 # Recorrido minimo con BFS con destino vertice
