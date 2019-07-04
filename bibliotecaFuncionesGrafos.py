@@ -93,7 +93,7 @@ def label_propagation(grafo, n=4):
     return comunidades
 
 
-#Funcion auxiliar label_propagation
+# Retorna el elemento mas repetido de una lista de elementos. Funcion auxiliar label_propagation
 def max_freq(label, adyacentes):
     labelAdyacentes = {}
     for adyacente in adyacentes:
