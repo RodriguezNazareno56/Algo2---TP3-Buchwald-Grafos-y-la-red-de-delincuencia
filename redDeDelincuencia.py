@@ -31,7 +31,7 @@ class RedDeDelincuentes:
 
     # Imprime un listado de comunidades de al menos n integrantes.
     def comunidades(self, n):
-        comunidades = label_propagation(self.grafoDelincuentes, 5)  # El 5 este medio arbitrario
+        comunidades = label_propagation(self.grafoDelincuentes)
         num_comunidad = 1
         for comunidad, integrantes in comunidades.items():
             if len(integrantes) >= n:

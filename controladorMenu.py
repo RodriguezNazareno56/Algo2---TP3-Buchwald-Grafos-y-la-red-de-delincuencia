@@ -8,9 +8,9 @@ class ControladorMenu:
     # --> parametro lista opciones - Opciones para Mostrar
     # --> retorna comando y parametros ingresados
     def __mostrarMenu(self, titulo, opciones):
-        # print('\n{0}'.format(titulo))
-        # for opcion in opciones:
-        #     print('-',opcion)
+        #print('\n{0}'.format(titulo))
+        #for opcion in opciones:
+        #    print('-',opcion)
 
         respuesta = input() #("Ingrese la operación que desea realizar: ")
         if(respuesta == ''): return None, None
