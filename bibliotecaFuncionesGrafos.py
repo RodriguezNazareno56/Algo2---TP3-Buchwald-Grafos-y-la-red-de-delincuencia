@@ -3,10 +3,17 @@ from io import open
 import random
 import math
 from grafo import *
-import sys
-sys.setrecursionlimit(10000)
 from collections import deque
+import sys
+sys.setrecursionlimit(10000) # Por default es 999
 
+
+# Recorrido tipo "Breadth First Search" 
+# Pre: Recibe como parametro el grafo dirigido y no ponderado, y el vector origen desde el cual se 
+# desea iniciar el recorrido. Opcionalmente puede recibir un vector destino y/o un orden maximo a fin de 
+# finalizar el recorrido una vez alcanzada el destino y/o orden maximo.
+# Post: Retorna un diccionario con el orden de cada vertice en el grafo y un diccionario con
+# el padre correspondiente a cada vertice, de modo de poder reconstruir el recorrido.
 def bfs(grafo, origen, destino=None, ordenMax=None):
     visitados = set()
     padre = {}
@@ -33,7 +40,10 @@ def bfs(grafo, origen, destino=None, ordenMax=None):
 
     return padre,orden
 
-# Recorrido minimo con BFS con destino vertice
+# Recorrido minimo con BFS con destino vertice.
+# Pre: Recibe por parametro un grafo dirigido y no ponderado, vertice origen y vertice destino.
+# Post: Retorna el orden del vertice destino y una lista con el camino correspondiente
+# de origen a destino.
 def recorridoMinimoBfs(grafo, origen, destino):
     padres, orden = bfs(grafo, origen, destino)
     if(destino not in padres): return None, None
@@ -45,7 +55,9 @@ def recorridoMinimoBfs(grafo, origen, destino):
         vertice = padres[vertice]
     return orden[destino], camino[::-1]
 
-# Recorrido minimo con BFS con maximo de n saltos
+# Recorrido radial con BFS de n distancia maxima.
+# Pre: Recibe por parametro un grafo dirigido y no ponderado, vertice origen y una distancia maxima.
+# Post: Retorna una lista con los vertices afectados distMax un radio n del origen
 def recorridoMinimoBfsMaximo(grafo, origen, distMax):
     padres, orden = bfs(grafo, origen, None, distMax)
     verticesAfectados = []
@@ -53,7 +65,11 @@ def recorridoMinimoBfsMaximo(grafo, origen, distMax):
         verticesAfectados.append(key)
     return verticesAfectados
 
-# Comunidades - label_propagation
+
+# Comunidades en forma aproximada a traves de label_propagation
+# Pre: Recibe por parametro un grafo dirigido y no ponderado, opcionamente un 'n' iteraciones, por default 5,
+# esta ultima permite ajustar el numero de iteraciones, a mayor n mas compactas seran las comunidades
+# Post: Retorna una lista de comunidades con sus respectivos vertices.
 def label_propagation(grafo, n=5):
     label = {}
     i = 1
@@ -73,13 +89,18 @@ def label_propagation(grafo, n=5):
 
     return comunidades
 
+# Funcion auxiliar label_propagation
 def max_freq(label, adyacentes):
     labelAdyacentes = []
     for adyacente in adyacentes:
         labelAdyacentes.append(label[adyacente])
     return (collections.Counter(labelAdyacentes).most_common()[0][0])
 
-# Centralidad aproximada
+
+# Centralidad aproximada, a traves de random_walks, de n "cantidad" de vertices
+# Pre: Recibe por parametro un grafo dirigido y no ponderado, n 'cantidad' de vertices centrales
+# que se buscan
+# Post: Retorna una lista de los n "cantidad" de vertices mas centrales de mayor a menor
 def centralidad_aprox(grafo, cantidad):
     caminos = random_walks(grafo, 1000, 300)  # Numero arbitrario
     recorridoTotal = []
@@ -94,7 +115,10 @@ def centralidad_aprox(grafo, cantidad):
             verticesCentrales.append(candidatosCentrales[i][0])
     return verticesCentrales
 
-
+# Randon walks - Realiza caminos aleatoreos a lo largo del grafo. 
+# Pre: Recibe por parametro un grafo dirigido y no ponderado, una longitudCamino y cantidadCaminos
+# Post: Retorna un lista de n 'cantidadCaminos' de longitud 'longitudCaminos' con
+# todos los vertices que componen al camino  
 def random_walks(grafo, longitudCamino, cantidadCaminos):
     caminos = []
     vertices = grafo.obtenerVertices()
@@ -103,15 +127,18 @@ def random_walks(grafo, longitudCamino, cantidadCaminos):
         verticeActual = random.choice(vertices)
         camino.append(verticeActual)
         for j in range(longitudCamino):
-            adyacentes = verticeActual.obtenerAdyacentes()
-            if(adyacentes):
-                verticeActual = random.choice(verticeActual.obtenerAdyacentes())
-                camino.append(verticeActual)
+            verticeActual = random.choice(verticeActual.obtenerAdyacentes())
+            camino.append(verticeActual)
         caminos.append(camino)
 
     return caminos
 
-
+# Recorrido minimo de tipo BFS, con multiples origenes hacia 'kMasImp' mas centrales
+# Pre: Recibe por parametro un grafo dirigido y no ponderado, una lista de vertices origen y
+# un int 'kMasImp' vertices de mayor Centalidad. 
+# Post: Retorna el camino de menor longitud, desde uno de los vertices origen hacia uno de los
+# "kMasImp" mas centrales. Optando a estos, orgien y destino, del modo mas conveniente a la finalidad
+# del camino mas corto
 def recorrido_min_multi_origen_multi_destino(grafo, idVerticesOrigen, kMasImp):
     kVerticesMasImp = centralidad_aprox(grafo, kMasImp)
     verticesOrigen = []
@@ -132,6 +159,9 @@ def recorrido_min_multi_origen_multi_destino(grafo, idVerticesOrigen, kMasImp):
     return caminoMin
 
 
+# Componente fuertemente conexo - Algoritmo de Tarjan
+# Pre: 
+# Post: 
 def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
     visitados.add(v)
     s.append(v)
@@ -154,7 +184,9 @@ def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
             nueva_cfc.append(z)
         cfcs.append(nueva_cfc)
 
-
+# Componente fuertemente conexo - Algoritmo de Tarjan
+# Pre:
+# Post:
 def cfc(grafo):
     visitados = set()
     orden = {}
@@ -169,6 +201,7 @@ def cfc(grafo):
     return cfcs
 
 
+# Ciclo de largo n en un grafo - entrategia backtracking
 def _ciclo_largo_n(visitados, origen, actual, n):
     if n == 1:
         if origen in actual.obtenerAdyacentes():
@@ -186,13 +219,20 @@ def _ciclo_largo_n(visitados, origen, actual, n):
                     return True
         return False
 
-
+# Ciclo de largo n en un grafo
+# Pre: Recibe por parametro un grafo dirigido no ponderado, un vertice origen y un 'n'
+# como largo del ciclo
+# Post: Retorna una lista con el camino del ciclo de largo 'n'
 def ciclo_largo_n(grafo, origen, n):
     visitados = [origen]
     _ciclo_largo_n(visitados, origen, origen, n)
     return visitados
 
 
+# Carga un grafo
+# Pre: Recibe por parametro un fichero .tsv en formato:
+# id_verticeOrigen   id_verticeDestino
+# Post: Retorna un grafo con los vertices y aristas contenidas en el archivo
 def cargarGrafo(ficheroRuta):
     grafo = Grafo()
     with open(ficheroRuta,'r') as fichero:
