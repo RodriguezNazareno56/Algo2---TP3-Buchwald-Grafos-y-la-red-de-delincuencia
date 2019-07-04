@@ -103,8 +103,10 @@ def random_walks(grafo, longitudCamino, cantidadCaminos):
         verticeActual = random.choice(vertices)
         camino.append(verticeActual)
         for j in range(longitudCamino):
-            verticeActual = random.choice(verticeActual.obtenerAdyacentes())
-            camino.append(verticeActual)
+            adyacentes = verticeActual.obtenerAdyacentes()
+            if(adyacentes):
+                verticeActual = random.choice(verticeActual.obtenerAdyacentes())
+                camino.append(verticeActual)
         caminos.append(camino)
 
     return caminos

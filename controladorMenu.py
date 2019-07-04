@@ -12,7 +12,7 @@ class ControladorMenu:
         #for opcion in opciones:
         #    print('-',opcion)
 
-        respuesta = input()#("Ingrese la operación que desea realizar: ")
+        respuesta = input() #("Ingrese la operación que desea realizar: ")
         if(respuesta == ''): return None, None
         operacion = respuesta.split(' ')
         comando = operacion[0]
@@ -20,15 +20,15 @@ class ControladorMenu:
 
         while (comando not in opciones or
                not self.__validarParametros(comando, parametros)):
-            respuesta = input()#("Ingrese la operación que desea realizar: ")
-            if (respuesta == ''):
-                return None, None
+            respuesta = input() #("Ingrese la operación que desea realizar: ")
+            if (respuesta == ''): return None, None
             operacion = respuesta.split(' ')
             comando = operacion[0]
             parametros = operacion[1:]
 
         return comando, parametros
 
+    # Valida los parametros de entrada
     def __validarParametros(self, comando, parametros):
         if (comando == 'min_seguimientos'):
             if len(parametros) == 2: return True
@@ -46,6 +46,7 @@ class ControladorMenu:
             if len(parametros) == 0: return True
         return False
 
+    # Visualiza el menuPrincipal, retorna la respuesta elegida
     def controladorMenuPrincipal(self):
         return self.__mostrarMenu("¿Que operación desea realizar?",
                                   ['min_seguimientos', 'mas_imp', 'persecucion', 'comunidades', 'divulgar',
