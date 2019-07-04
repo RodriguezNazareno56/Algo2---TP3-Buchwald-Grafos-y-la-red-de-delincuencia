@@ -127,8 +127,10 @@ def random_walks(grafo, longitudCamino, cantidadCaminos):
         verticeActual = random.choice(vertices)
         camino.append(verticeActual)
         for j in range(longitudCamino):
-            verticeActual = random.choice(verticeActual.obtenerAdyacentes())
-            camino.append(verticeActual)
+            adyacentes = verticeActual.obtenerAdyacentes()
+            if adyacentes:
+                verticeActual = random.choice(verticeActual.obtenerAdyacentes())
+                camino.append(verticeActual)
         caminos.append(camino)
 
     return caminos
@@ -152,7 +154,7 @@ def recorrido_min_multi_origen_multi_destino(grafo, idVerticesOrigen, kMasImp):
     for verticeOrigen in verticesOrigen:
         for kVerticeMasImp in kVerticesMasImp:
             orden, camino = recorridoMinimoBfs(grafo, verticeOrigen, kVerticeMasImp)
-            if orden < ordenMin:
+            if orden and orden < ordenMin:
                 ordenMin = orden
                 caminoMin = camino
 
