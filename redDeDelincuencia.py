@@ -62,10 +62,10 @@ class RedDeDelincuentes:
         componente_fuertemente_conexas = cfc(self.grafoDelincuentes)
         comp_contador = 1
         for componente in componente_fuertemente_conexas:
-            #if len(componente) > 1:
-            print("CFC " + str(comp_contador) + ": ", end="")
-            self.__visualizar_resultado(componente, ' ,')
-            comp_contador += 1
+            if len(componente) > 1:
+                print("CFC " + str(comp_contador) + ": ", end="")
+                self.__visualizar_resultado(componente, ' ,')
+                comp_contador += 1
 
     # Imprime un camino simple que empiece y termine en el delincuente pasado por parámetro,
     # de largo n. En caso de no encontrarse un ciclo de ese largo y dicho comienzo, imprimir No se 
