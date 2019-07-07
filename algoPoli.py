@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 # coding=utf-8
-import sys
-import redDeDelincuencia
-from controladorMenu import *
+from sys import argv
 import bibliotecaFuncionesGrafos
+import redDeDelincuencia
+import controladorMenu
 
 # Gestiona el menu principal, lleva a cabo los comandos introducidos por consola por el usuario
 # Pre: Recibe como parametro una instancia del objeto RedDeDelincuentes
 # Post: Mientras el usuario continue instroduciendo comandos, los mismos seran llevados a cabo.
 # pone fin a la ejecucion del programa en caso que el usuario introdusca una linea vacia o EOF.
 def menuPrincipal(redDelincuencia):
-    controladorMenu = ControladorMenu()
-    comando, parametros = controladorMenu.controladorMenuPrincipal()
+    controlador = controladorMenu.ControladorMenu()
+    comando, parametros = controlador.controladorMenuPrincipal()
     while (comando != None):
 
         if (comando == 'min_seguimientos'):     # Mínimos Seguimientos
@@ -46,7 +46,7 @@ def menuPrincipal(redDelincuencia):
             redDelincuencia.cfc()
 
         try:
-            comando, parametros = controladorMenu.controladorMenuPrincipal()
+            comando, parametros = controlador.controladorMenuPrincipal()
         except EOFError:
             comando = None
 
@@ -70,4 +70,4 @@ def main(argv):
 
 
 # Bloque Principal
-main(sys.argv[1:])
+main(argv[1:])
