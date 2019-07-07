@@ -32,7 +32,7 @@ class Vertice:
 class Grafo:
 
     def __init__(self):
-        self.listaVertices = {} #clave: Id:  valor: instancia de la clase vertice
+        self.listaVertices = {}
         self.numVertices = 0
 
     def __contains__(self, vertice):
@@ -72,7 +72,7 @@ class Grafo:
             self.agregarVertice(idOrigen)
         if idDestino not in self.listaVertices:
             self.agregarVertice(idDestino)
-        self.listaVertices[idOrigen].agregarVecino(self.listaVertices[idDestino])
+        self.listaVertices[idOrigen].agregarVecino(self.listaVertices[idDestino], ponderacion)
 
     # Retorna una lista de todos los vertices del arbol
     def obtenerVertices(self):
