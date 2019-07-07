@@ -1,13 +1,12 @@
-from math import inf
-from random import choice
-from sys import setrecursionlimit
-from collections import deque
-from collections import Counter
+import collections
 from io import open
-
+import random
+import math
 from grafo import *
+from collections import deque
+import sys
 
-setrecursionlimit(10000)  # Por default es 999
+sys.setrecursionlimit(10000)  # Por default es 999
 
 
 # Recorrido tipo "Breadth First Search" 
@@ -123,7 +122,7 @@ def centralidad_aprox(grafo, cantidad):
             recorridoTotal.append(vertice)
 
     verticesCentrales = []
-    candidatosCentrales = Counter(recorridoTotal).most_common()
+    candidatosCentrales = collections.Counter(recorridoTotal).most_common()
     for i in range(cantidad):
         if i < len(grafo) - 1:
             verticesCentrales.append(candidatosCentrales[i][0])
@@ -139,12 +138,12 @@ def random_walks(grafo, longitudCamino=800, cantidadCaminos=200):
     vertices = grafo.obtenerVertices()
     for i in range(cantidadCaminos):
         camino = []
-        verticeActual = choice(vertices)
+        verticeActual = random.choice(vertices)
         camino.append(verticeActual)
         for j in range(longitudCamino):
             adyacentes = verticeActual.obtenerAdyacentes()
             if adyacentes:
-                verticeActual = choice(verticeActual.obtenerAdyacentes())
+                verticeActual = random.choice(verticeActual.obtenerAdyacentes())
                 camino.append(verticeActual)
         caminos.append(camino)
 
@@ -166,7 +165,7 @@ def recorrido_min_multi_origen_multi_destino(grafo, idVerticesOrigen, kMasImp):
             verticesOrigen.append(vertice)
     caminoMin = []
     if len(verticesOrigen) == 0: return caminoMin
-    ordenMin = inf
+    ordenMin = math.inf
     for verticeOrigen in verticesOrigen:
         for kVerticeMasImp in kVerticesMasImp:
             orden, camino = recorridoMinimoBfs(grafo, verticeOrigen, kVerticeMasImp)
