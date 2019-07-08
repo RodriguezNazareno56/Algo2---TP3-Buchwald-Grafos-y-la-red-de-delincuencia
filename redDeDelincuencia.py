@@ -62,7 +62,9 @@ class RedDeDelincuentes:
         componente_fuertemente_conexas = cfc(self.grafoDelincuentes)
         comp_contador = 1
         for componente in componente_fuertemente_conexas:
-            # if len(componente) > 1:
+            if len(componente) > 1:
+                if(componente[-1] not in componente[0].obtenerAdyacentes()):
+                    componente.pop()
             print("CFC " + str(comp_contador) + ": ", end="")
             self.__visualizar_resultado(componente, ' ,')
             comp_contador += 1

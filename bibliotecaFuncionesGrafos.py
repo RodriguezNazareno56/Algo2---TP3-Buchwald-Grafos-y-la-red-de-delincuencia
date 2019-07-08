@@ -193,6 +193,7 @@ def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
         nueva_cfc = []
         while z != v:
             z = s.pop()
+            #if z != v:
             en_cfs.add(z)
             nueva_cfc.append(z)
         cfcs.append(nueva_cfc)
