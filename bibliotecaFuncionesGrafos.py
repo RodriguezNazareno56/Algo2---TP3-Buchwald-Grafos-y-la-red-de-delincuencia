@@ -1,13 +1,9 @@
-import collections
 from io import open
-import random
-import math
+from random import choice
+from math import inf
 from grafo import *
 from collections import deque
-import sys
-
-sys.setrecursionlimit(10000)  # Por default es 999
-
+from collections import Counter
 
 # Recorrido tipo "Breadth First Search" 
 # Pre: Recibe como parametro el grafo dirigido y no ponderado, y el vector origen desde el cual se 
@@ -46,8 +42,8 @@ def bfs(grafo, origen, destino=None, ordenMax=None):
 # Pre: Recibe por parametro un grafo dirigido y no ponderado, vertice origen y vertice destino.
 # Post: Retorna el orden del vertice destino y una lista con el camino correspondiente
 # de origen a destino.
-def recorridoMinimoBfs(grafo, origen, destino):
-    padres, orden = bfs(grafo, origen, destino)
+def recorridoMinimoBfs(grafo, origen, destino, ordenMax=None):
+    padres, orden = bfs(grafo, origen, destino, ordenMax)
     if (destino not in padres): return None, None
     camino = []
     vertice = destino
@@ -70,10 +66,10 @@ def recorridoMinimoBfsMaximo(grafo, origen, distMax):
 
 
 # Comunidades en forma aproximada a traves de label_propagation
-# Pre: Recibe por parametro un grafo dirigido y no ponderado, opcionamente un 'n' iteraciones, por default 4,
+# Pre: Recibe por parametro un grafo dirigido y no ponderado, opcionamente un 'n' iteraciones, por default 3,
 # esta ultima permite ajustar el numero de iteraciones, a mayor n mas compactas seran las comunidades
 # Post: Retorna una lista de comunidades con sus respectivos vertices.
-def label_propagation(grafo, n=4):
+def label_propagation(grafo, n=3):
     label = {}
     i = 1
     for vertice in grafo:
@@ -122,7 +118,7 @@ def centralidad_aprox(grafo, cantidad):
             recorridoTotal.append(vertice)
 
     verticesCentrales = []
-    candidatosCentrales = collections.Counter(recorridoTotal).most_common()
+    candidatosCentrales = Counter(recorridoTotal).most_common()
     for i in range(cantidad):
         if i < len(grafo) - 1:
             verticesCentrales.append(candidatosCentrales[i][0])
@@ -133,17 +129,17 @@ def centralidad_aprox(grafo, cantidad):
 # Pre: Recibe por parametro un grafo dirigido y no ponderado, una longitudCamino y cantidadCaminos
 # Post: Retorna un lista de n 'cantidadCaminos' de longitud 'longitudCaminos' con
 # todos los vertices que componen al camino  
-def random_walks(grafo, longitudCamino=800, cantidadCaminos=200):
+def random_walks(grafo, longitudCamino=500, cantidadCaminos=100):
     caminos = []
     vertices = grafo.obtenerVertices()
     for i in range(cantidadCaminos):
         camino = []
-        verticeActual = random.choice(vertices)
+        verticeActual = choice(vertices)
         camino.append(verticeActual)
         for j in range(longitudCamino):
             adyacentes = verticeActual.obtenerAdyacentes()
             if adyacentes:
-                verticeActual = random.choice(verticeActual.obtenerAdyacentes())
+                verticeActual = choice(verticeActual.obtenerAdyacentes())
                 camino.append(verticeActual)
         caminos.append(camino)
 
@@ -165,10 +161,10 @@ def recorrido_min_multi_origen_multi_destino(grafo, idVerticesOrigen, kMasImp):
             verticesOrigen.append(vertice)
     caminoMin = []
     if len(verticesOrigen) == 0: return caminoMin
-    ordenMin = math.inf
+    ordenMin = inf
     for verticeOrigen in verticesOrigen:
         for kVerticeMasImp in kVerticesMasImp:
-            orden, camino = recorridoMinimoBfs(grafo, verticeOrigen, kVerticeMasImp)
+            orden, camino = recorridoMinimoBfs(grafo, verticeOrigen, kVerticeMasImp, ordenMin)
             if orden and orden < ordenMin:
                 ordenMin = orden
                 caminoMin = camino
@@ -257,7 +253,7 @@ def cargarGrafo(ficheroRuta):
     with open(ficheroRuta, 'r') as fichero:
         for linea in fichero:
             origen, destino = linea.strip('\n').split('\t')
-            if (origen != destino):
-                grafo.agregarArista(origen, destino)
+            #if (origen != destino):
+            grafo.agregarArista(origen, destino)
         fichero.close()
     return grafo

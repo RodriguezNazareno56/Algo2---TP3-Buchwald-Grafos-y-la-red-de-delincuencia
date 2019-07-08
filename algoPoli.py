@@ -5,6 +5,8 @@ import redDeDelincuencia
 from controladorMenu import *
 import bibliotecaFuncionesGrafos
 
+sys.setrecursionlimit(10000) # Por default es 999
+
 # Gestiona el menu principal, lleva a cabo los comandos introducidos por consola por el usuario
 # Pre: Recibe como parametro una instancia del objeto RedDeDelincuentes
 # Post: Mientras el usuario continue instroduciendo comandos, los mismos seran llevados a cabo.
@@ -27,6 +29,7 @@ def menuPrincipal(redDelincuencia):
             agentesEncubiertos = parametros[0].split(",")
             kMasImportantes = int(parametros[1])
             redDelincuencia.persecucion(agentesEncubiertos, kMasImportantes)
+            #print(" ")
 
         elif (comando == 'comunidades'):        # Comunidades
             min_integrantes = int(parametros[0])
