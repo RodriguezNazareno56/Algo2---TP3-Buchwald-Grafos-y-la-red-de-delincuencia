@@ -173,8 +173,6 @@ def recorrido_min_multi_origen_multi_destino(grafo, idVerticesOrigen, kMasImp):
 
 
 # Componente fuertemente conexo - Algoritmo de Tarjan
-# Pre: 
-# Post: 
 def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
     visitados.add(v)
     s.append(v)
@@ -200,8 +198,6 @@ def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
 
 
 # Componente fuertemente conexo - Algoritmo de Tarjan
-# Pre:
-# Post:
 def cfc(grafo):
     visitados = set()
     orden = {}
@@ -258,55 +254,3 @@ def cargarGrafo(ficheroRuta):
             grafo.agregarArista(origen, destino)
         fichero.close()
     return grafo
-
-def fillOrder(v, visitados, stack):
-    visitados[v] = True
-    for adyacente in v.obtenerAdyacentes():
-        if visitados[adyacente] == False:
-            fillOrder(adyacente, visitados, stack)
-    stack = stack.append(v)
-
-def invertirGrafo(grafo):
-    grafoIvertido = Grafo()
-    for vertice in grafo.obtenerVertices():
-        for adyacente in vertice.obtenerAdyacentes():
-            grafoIvertido.agregarArista(adyacente.obtenerId(),vertice.obtenerId())
-    return grafoIvertido
-
-def reconstruir_stack(grafo, stack):
-    stackGrafoInvertido = []
-    for v in stack:
-        idV = v.obtenerId()
-        vertice = grafo.obtenerVertice(idV)
-        stackGrafoInvertido.append(vertice)
-    return stackGrafoInvertido
-
-def SCC(grafo):
-    stack = []
-    visitados = {}
-    for vertice in grafo.obtenerVertices():
-        visitados[vertice] = False
-
-    for vertice in grafo.obtenerVertices():
-        if visitados[vertice] == False:
-            fillOrder(vertice, visitados, stack)
-
-    grafoInvertido = invertirGrafo(grafo)
-    stackGrafoInvertido = reconstruir_stack(grafoInvertido, stack)
-
-    visitados = set()
-    contador = 1
-    for vertice in stackGrafoInvertido[::-1]:
-        if vertice not in visitados:
-            print("CFC {}: ".format(str(contador)), end="")
-            contador += 1
-            bfs_grafo_invertido(grafoInvertido, vertice, stackGrafoInvertido, visitados)
-
-
-def bfs_grafo_invertido(grafo, vertice, stack, visitados):
-    visitados.add(vertice)
-    print(vertice, end="")
-    for adyacente in vertice.obtenerAdyacentes():
-        if adyacente not in visitados:
-            print(", ",end="")
-            bfs_grafo_invertido(grafo, adyacente, stack, visitados)
