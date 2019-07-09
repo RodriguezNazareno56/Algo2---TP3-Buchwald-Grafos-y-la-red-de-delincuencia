@@ -59,14 +59,18 @@ class RedDeDelincuentes:
 
     # Imprime cada conjunto de vértices entre los cuales todos están conectados con todos.
     def cfc(self):
+        #SCC(self.grafoDelincuentes)
+        #print("\nLa otra implementacion:")
         componente_fuertemente_conexas = cfc(self.grafoDelincuentes)
         comp_contador = 1
         for componente in componente_fuertemente_conexas:
-            if len(componente) > 1:
-                if(componente[-1] not in componente[0].obtenerAdyacentes()):
-                    componente.pop()
+            # if len(componente) > 1:
+            #     if(componente[-1] not in componente[0].obtenerAdyacentes()):
+            #         componente.pop()
             print("CFC " + str(comp_contador) + ": ", end="")
-            self.__visualizar_resultado(componente, ' ,')
+            self.__visualizar_resultado(componente, ', ')
+            #for elem in componente:
+            #    print(elem, end=" ,")
             comp_contador += 1
 
     # Imprime un camino simple que empiece y termine en el delincuente pasado por parámetro,
